@@ -1,25 +1,25 @@
 class Vehiculo{
     constructor(marca, modelo, precio){
-        this.marca = marca;
-        this.modelo = modelo;
-        this.precio = precio;
+        this._marca = marca;
+        this._modelo = modelo;
+        this._precio = precio;
     }
 
-    getMarca(){
-        return this.marca;
+    get marca(){
+        return this._marca;
     }
-    getModelo(){
-        return this.modelo;
+    get modelo(){
+        return this._modelo;
     }
-    getPrecio(){
-        return this.precio;
+    get precio(){
+        return this._precio;
     }
     getFormatoPrecio(){
         let formatoPrecio = new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'USD'
         });
-        let precioFormateado = formatoPrecio.format(this.getPrecio());
+        let precioFormateado = formatoPrecio.format(this.precio);
         for(let i = 0; i < precioFormateado.length; i++){
             if(precioFormateado[i] === ','){
                 precioFormateado = precioFormateado.substring(0, i)+ '.' + precioFormateado.substring(i+1);
@@ -33,37 +33,37 @@ class Vehiculo{
         return "";
     }
     getMarcaYModelo(){
-        return `${this.getMarca()} ${this.getModelo()}`;
+        return `${this.marca} ${this.modelo}`;
     }
 }
 
 class Auto extends Vehiculo{
     constructor(marca, modelo, precio, puertas){
         super(marca, modelo, precio);
-        this.puertas = puertas;
+        this._puertas = puertas;
     }
 
-    getPuertas(){
-        return this.puertas;
+    get puertas(){
+        return this._puertas;
     }
     
     getInfoVehiculo(){
-        return `Marca: ${this.getMarca()} // Modelo: ${this.getModelo()} // Puertas: ${this.getPuertas()} // Precio: ${this.getFormatoPrecio()}`
+        return `Marca: ${this.marca} // Modelo: ${this.modelo} // Puertas: ${this.puertas} // Precio: ${this.getFormatoPrecio()}`
     }
 }
 
 class Moto extends Vehiculo{
     constructor(marca, modelo, precio, cilindrada){
         super(marca, modelo, precio);
-        this.cilindrada = cilindrada;
+        this._cilindrada = cilindrada;
     }
     
-    getCilindrada(){
-        return this.cilindrada;
+    get cilindrada(){
+        return this._cilindrada;
     }
     
     getInfoVehiculo(){
-        return `Marca: ${this.getMarca()} // Modelo: ${this.getModelo()} // Cilindrada: ${this.getCilindrada()}cc // Precio: ${this.getFormatoPrecio()}`
+        return `Marca: ${this.marca} // Modelo: ${this.modelo} // Cilindrada: ${this.cilindrada}cc // Precio: ${this.getFormatoPrecio()}`
     }
 }
 
@@ -85,9 +85,9 @@ const conseguirCaro = (listaVehiculos) =>{
     let valorActual = 0;
     let vehiculoActual = "";
     for(let i= 0; i < listaVehiculos.length; i++){
-        if(listaVehiculos[i].getPrecio() > valorActual){
+        if(listaVehiculos[i].precio > valorActual){
             vehiculoActual = listaVehiculos[i].getMarcaYModelo();
-            valorActual = listaVehiculos[i].getPrecio();
+            valorActual = listaVehiculos[i].precio;
         }
     }
     return `Vehículo más caro: ${vehiculoActual}`;
@@ -97,9 +97,9 @@ const conseguirBarato = (listaVehiculos) =>{
     let valorActual = 99999999999;
     let vehiculoActual = "";
     for(let i= 0; i < listaVehiculos.length; i++){
-        if(listaVehiculos[i].getPrecio() < valorActual){
+        if(listaVehiculos[i].precio < valorActual){
             vehiculoActual = listaVehiculos[i].getMarcaYModelo();
-            valorActual = listaVehiculos[i].getPrecio();
+            valorActual = listaVehiculos[i].precio;
         }
     }
     return `Vehículo más barato: ${vehiculoActual}`;
@@ -108,7 +108,7 @@ const conseguirBarato = (listaVehiculos) =>{
 const modeloConY = (listaVehiculos) =>{
     let vehiculoY = "";
     for(let i = 0; i< listaVehiculos.length; i++){
-        if(listaVehiculos[i].getModelo().toLowerCase().includes('y')){
+        if(listaVehiculos[i].modelo.toLowerCase().includes('y')){
             vehiculoY = `${listaVehiculos[i].getMarcaYModelo()} ${listaVehiculos[i].getFormatoPrecio()}`
         }
     }
@@ -116,7 +116,7 @@ const modeloConY = (listaVehiculos) =>{
 }
 
 const vehiculosDeMayorAMenor = (listaVehiculos) =>{
-    let nuevaLista = listaVehiculos.sort((a, b)=> (a.getPrecio() < b.getPrecio()) ? 1 : -1)
+    let nuevaLista = listaVehiculos.sort((a, b)=> (a.precio < b.precio) ? 1 : -1)
     let finalString = `Vehículos ordenados por precio de mayor a menor:`;
     for(let i = 0; i < nuevaLista.length; i++){
         finalString = `${finalString}
